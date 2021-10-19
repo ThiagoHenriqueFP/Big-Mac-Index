@@ -1,0 +1,45 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/estilo.css">
+</head>
+
+<body>
+  <div class="comp">
+    <div class="layout">
+      <div class="logo">
+        <img src="/assets/z_mcdonalds_burger_logo_brand_icon_133252.svg" />
+        <div class="texto">
+          <h1>Big Mac Calc</h1>
+        </div>
+      </div>
+      <div class="texto2">
+        <h1>What's this</h1>
+      </div>
+    </div>
+    <div class="forms">
+      <form action="/cotacao" method="post">
+        <div class="input-group">
+          <h2>Big mac price in your country</h2>
+          <input type="text" id="input-hamburguer" name="hamburguer">
+        </div>
+        <div class="input-group">
+          <h2>Minimal wage</h2>
+          <input type="text" id="input-salario" name="salario">
+        </div>
+        <br>
+        <div class="input-group flags">
+          <select name="country" id="">
+						<option value="BRL">Bandeira Brasil</option>
+						<option value="EUR">Bandeira EU</option>
+						<option value="CHF">Bandeira Suiça</option>
+					</select>
+        </div>
+        <br>
+        <div class="input-group flags">
+          <button class="button" type="submit">
+						<h1>Check Index</h1>
+					</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
