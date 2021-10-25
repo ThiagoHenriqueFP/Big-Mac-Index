@@ -1,3 +1,80 @@
-{{{percents}}}
-{{{bid}}}
-{{{comparison}}}
+<head>
+	<script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    google.charts.load('current', {
+      packages: ['corechart']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Define the chart to be drawn.
+      var data = new google.visualization.arrayToDataTable([
+        ['País', 'índice big mac'],
+        ['Suiça', {{purchPowerSwitz}}],
+				['Reino Unido', {{purchPowerEuro}}],
+        ['Brasil', {{purchPower}}],
+				['Argentina', {{purchPowerARS}}],
+				['Venezuela', {{purchPowerVEF}}]
+      ]);
+
+      // Instantiate and draw the chart.
+      var chart = new google.visualization.BarChart(document.getElementById('myBarsChart'));
+      chart.draw(data, null);
+
+      $(window).resize(function() {
+        drawChart();
+      });
+    }
+  </script>
+	<link rel="stylesheet" href="/css/style.css">
+	<title>Value Big Mac</title>
+</head>
+
+
+<body>
+  <div class="comp grid">
+    <div class="layout">
+      <div class="logo">
+        <img src="/assets/z_mcdonalds_burger_logo_brand_icon_133252.svg" />
+      </div>
+      <h1>Calculadora Big Mac</h1>
+      <!--       <div class="texto2">
+        
+      </div> -->
+    </div>
+    <div id="myBarsChart">
+			{{!-- <span class="rodape">cotação vigente: {{infos.[1]}} </span> --}}
+		</div>
+    <!-- <div class="info">
+      <h4>Best country’s purchasing power</h4>
+      <h4>Your country</h4>
+      <h4>Worst country’s purchasing power</h4>
+      <h4>Eua’s purchasing power</h4>
+    </div> -->
+    {{!-- <div class="media info2">
+      <h4>Média do poder de compra Mundial (em escala de bigmacs):</h4>
+
+      <span class="data-hbs">%</span>
+    </div> --}}
+    <div class="percentual info3">
+      <h4>Porcentagem de {{infos.[2]}} da moeda escolhida:</h4>
+
+      <span class="data-hbs">{{percents}}%</span>
+    </div>
+
+    <div class="valuate info4">
+      <h4>Poder de compra no Brasil (em escala de bigmacs):</h4>
+
+      <span class="data-hbs">{{purchPower}} Big mac's por salário</span>
+    </div>
+
+    <button class="button" type="submit">
+         <a href="/"><span>Back</span></a>
+    </button>
+
+    <!-- <div class="credit">
+      <h2>Created By:</h2>
+    </div> -->
+  </div>
+</body>
+<br>

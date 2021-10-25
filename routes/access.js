@@ -1,13 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-/* const api = require('../services/apiCotacao'); */
 
 router.get('/', async(req, res) => {
   res.render('pages/home')
 });
 
 router.post('/', async(req, res) => {
+  //Suiça
+  let purchPowerSwitz = 805.15;
+  //Europa
+  let purchPowerEuro = 387.60;
+  //Argentina
+  let purchPowerARS = 0.05;
+  //Venezuela
+  let purchPowerVEF = 0.30;
+  //Variáveis
   let bidApi;
   let subtractRes;
   let percents;
@@ -15,7 +23,8 @@ router.post('/', async(req, res) => {
   let comparison;
   let destiny = req.body.country;
   let wage = req.body.salario;
-  let parsedWage = wage;
+  let parsedWage = parseFloat(wage).toFixed(2);
+  let infos = [];
 
   await axios.get(`https://economia.awesomeapi.com.br/last/USD-${destiny}`).then((response) => {
     let nameProprety = Object.keys(response.data)[0];
@@ -25,36 +34,40 @@ router.post('/', async(req, res) => {
   });
 
   function valDesvalCambial(valBigMacYourCounty) {
-    let valBigMacEUA = 5.71;
+    let valBigMacEUA = 5.65;
     let price = parseFloat(bidApi).toFixed(2);
     let parsedValBigMacYourCounty = parseFloat(valBigMacYourCounty).toFixed(2);
     comparison = parsedValBigMacYourCounty / valBigMacEUA;
-    console.log(`Divisão do valor do bigmac nos EUA e no Brasil: ${comparison} - Cotação dollar: ${bidApi} - Valor do bigmac nos EUA: ${valBigMacEUA} - Valor do bigmac no Brasil: `, parsedValBigMacYourCounty);
+    /* console.log(`Divisão do valor do bigmac nos EUA e no Brasil: ${comparison} - Cotação dollar: ${bidApi} - Valor do bigmac nos EUA: ${valBigMacEUA} - Valor do bigmac no Brasil: `, parsedValBigMacYourCounty); */
+    infos.push(valBigMacEUA, price)
     if (price > comparison) {
-      console.log("moeda desvalorizada");
+      infos.push('desvalorização');
       subtractRes = price - comparison;
       percents = (subtractRes * 100) / price;
-      console.log(`Porcentagem de desvalorização: ${percents}%`);
+      /* console.log(`Porcentagem de desvalorização: ${percents}%`); */
     } else if (price < comparison) {
-      console.log("moeda valorizada");
+      infos.push('Moeda Valorizada')
       subtractRes = comparison - price;
       percents = (subtractRes * 100) / price;
-      console.log(`valorização de: ${percents}%`);
+      /* console.log(`valorização de: ${percents}%`); */
     } else {
-      console.log("moeda com mesma cotação");
+      infos.push('Valorização');
     }
 
 
     purchPower = (parsedWage / price) / (parsedValBigMacYourCounty / price);
-    console.log(`Poder de compra: ${purchPower}`);
+    /* console.log(`Poder de compra: ${purchPower}`); */
   }
-
   valDesvalCambial(req.body.hamburguer);
 
   res.render('pages/info', {
-    bid: bidApi,
-    comparison: comparison,
-    percents: percents
+    percents: parseFloat(percents).toFixed(2),
+    purchPower: parseFloat(purchPower).toFixed(2),
+    purchPowerSwitz: purchPowerSwitz,
+    purchPowerEuro: purchPowerEuro,
+    purchPowerARS: purchPowerARS,
+    purchPowerVEF: purchPowerVEF,
+    infos: infos,
   });
 });
 
