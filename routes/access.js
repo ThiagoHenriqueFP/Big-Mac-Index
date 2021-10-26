@@ -81,12 +81,12 @@ router.post('/', async(req, res) => {
     infos.push(valBigMacEUA, price)
     if (price > comparison) {
       infos.push('desvalorização');
-      subtractRes = price - comparison;
+      subtractRes2020 = price - comparison;
       percents2020 = (subtractRes * 100) / price;
       /* console.log(`Porcentagem de desvalorização: ${percents}%`); */
     } else if (price < comparison) {
       infos.push('Moeda Valorizada')
-      subtractRes = comparison - price;
+      subtractRes2020 = comparison - price;
       percents2020 = (subtractRes * 100) / price;
       /* console.log(`valorização de: ${percents}%`); */
     } else {
@@ -94,7 +94,7 @@ router.post('/', async(req, res) => {
     }
 
     /* console.log(percents); */
-    purchPower2020 = (parsedWage / price) / (valBigMacYourCounty2 / price);
+    purchPower2020 = (1080 / price) / (valBigMacYourCounty2 / price);
     /* console.log(`Poder de compra: ${purchPower}`); */
   }
   valDesvalCambial2020();
